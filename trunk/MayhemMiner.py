@@ -14,7 +14,7 @@ class MayhemMiner:
 		elif page == -2:
 			return -2
 		else:
-			request = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/?", page)
-			request.launchRequest(1)
+			request = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page)
+			request.launchRequest(1, verbosity)
 			
 		return 0
