@@ -38,6 +38,7 @@ class MayhemCastingParser:
 		iCompensation = iter(compensation)
 		iLocation = iter(location)
 		iSeeking = iter(seeking)
+		castingCount = 0
 		if len(ID) == len(profession)\
 			and len(ID) == len(nudity)\
 			and len(ID) == len(compensation)\
@@ -47,6 +48,11 @@ class MayhemCastingParser:
 				# skip key check, doesn't really matter anyway
 				dataDict[int(iID)] = CastingDataObject(iProfession.next(), tuple(set(iSeeking.next()[1:]))[1:]\
 												, iLocation.next(), iNudity.next(), iCompensation.next())
+				castingCount += 1
+				
+			if self.verbosity == 1:
+				print ">>>", castingCount, "returned"
+				
 		else:
 			if self.verbosity == 1:
 				print "Mismatched regex results", len(ID)
