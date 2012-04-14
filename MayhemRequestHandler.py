@@ -17,8 +17,9 @@ class MayhemRequestHandler:
 		self.currentPage = 1
 		self.pageModulus = 50
 		self.verbosity = verbosity
+		self.castingParser = MayhemCastingParser(self.verbosity)
 		
-	def launchRequest(self, castingParser):		
+	def launchRequest(self, castingDataDict):		
 		params = urllib.urlencode([('fm_action', "Search")
 									, ('search_type', "casting for")
 									, ('m_search_type[]', "0")
@@ -36,8 +37,8 @@ class MayhemRequestHandler:
 									, ('m_search_type[]', "14")
 									, ('m_search_type[]', "15")
 									, ('cc_country', "US")
-									, ('cc_state', "4114")
-									, ('cc_city', "2750955")
+									, ('cc_state', "4096")
+									, ('cc_city', "2742224")
 									, ('search_mile_range', "1.00")
 									, ('fm_button', " ")
 									, ('search_start_date', "")
@@ -67,7 +68,7 @@ class MayhemRequestHandler:
 					print "Page", self.currentPage, "of", self.pageCount, ":" \
 						, sys.getsizeof(self.result), "bytes returned"
 					
-			castingParser.parse(self.result)
+			self.castingParser.parse(castingDataDict, self.result)
 			if self.currentPage == self.pageCount:
 				break
 			else:

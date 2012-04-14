@@ -6,7 +6,7 @@ from MayhemCastingParser import MayhemCastingParser
 class MayhemMiner:
 	def __init__(self, verbosity):
 		self.verbosity = verbosity
-		self.castingParser = MayhemCastingParser(self.verbosity)
+		self.castingDataDict = {}
 		self.mine()
 		
 	def mine(self):
@@ -18,6 +18,8 @@ class MayhemMiner:
 			return -2
 		else:
 			request = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
-			request.launchRequest(self.castingParser)
+			request.launchRequest(self.castingDataDict)
+			for k, v in sorted(self.castingDataDict.iteritems()):
+				print k, v.dump()
 			
 		return 0
