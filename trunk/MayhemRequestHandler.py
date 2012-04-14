@@ -4,9 +4,10 @@ import urllib
 import urllib2
 import re
 import sys
+from MayhemCastingParser import MayhemCastingParser
 
 class MayhemRequestHandler:
-	def __init__(self, URL, page):
+	def __init__(self, URL, page, verbosity):
 		self.URL = URL
 		self.page = page
 		self.result = None
@@ -15,8 +16,9 @@ class MayhemRequestHandler:
 		self.pageCount = 0
 		self.currentPage = 1
 		self.pageModulus = 50
+		self.verbosity = verbosity
 		
-	def launchRequest(self, index=1, verbosity=0):		
+	def launchRequest(self, castingParser):		
 		params = urllib.urlencode([('fm_action', "Search")
 									, ('search_type', "casting for")
 									, ('m_search_type[]', "0")
@@ -53,18 +55,19 @@ class MayhemRequestHandler:
 				# Only need to be checked once to get number of pages
 				if self.pageCount == 0:
 					if re.search(self.multiplePagesSearch, self.result) != None:
-						self.countNumberOfPages(verbosity)
+						self.countNumberOfPages(self.verbosity)
 					else:
 						self.pageCount = 1
 						
-				if verbosity >= 2:
+				if self.verbosity >= 2:
 					print self.URL + params
 					print self.result
 					
-				if verbosity >= 1:
+				if self.verbosity >= 1:
 					print "Page", self.currentPage, "of", self.pageCount, ":" \
 						, sys.getsizeof(self.result), "bytes returned"
 					
+			castingParser.parse(self.result)
 			if self.currentPage == self.pageCount:
 				break
 			else:
