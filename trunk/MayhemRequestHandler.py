@@ -66,16 +66,16 @@ class MayhemRequestHandler:
 					
 				if self.verbosity >= 1:
 					print "Page", self.currentPage, "of", self.pageCount, ":" \
-						, sys.getsizeof(self.result), "bytes returned"
+						, sys.getsizeof(self.result)/1024, "KB returned"
 					
-			self.castingParser.parse(castingDataDict, self.result)
-			if self.currentPage == self.pageCount:
+			castingCount = self.castingParser.parse(castingDataDict, self.result)
+			if self.currentPage == self.pageCount or castingCount <= 0:
 				break
 			else:
 				self.currentPage += 1
 				
 	def countNumberOfPages(self, verbosity):
 		resultCount = re.search(".(results )[0-9\-]+[ ]+(of)[ ]+([0-9]+)", self.result)
-		self.pageCount = int(resultCount.group(3)) / self.pageModulus + 1
+		self.pageCount = (int(resultCount.group(3)) - 1) / self.pageModulus + 1
 		if verbosity == 1:
 			print self.pageCount, "pages to search"

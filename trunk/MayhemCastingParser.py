@@ -10,7 +10,7 @@ class MayhemCastingParser:
 		self.verbosity = verbosity
 		
 	def parse(self, dataDict, result):
-		profession = re.findall("(?ms)[\"][>]([A-Z a-z/]+)</div>", result)
+		profession = re.findall("[\"][>]([A-Z a-z/]*)</div>.*[\n\r\t]+.*(?:ccViewDetails)", result)
 		ID = re.findall("\"#\"><a href=\"/casting/([0-9]+)[?]", result)
 		seeking = re.findall("[\n\r\t]+((Female Models)<br>|(Male Models)<br>|(Photographer)<br>|\
 (Makeup Artist)<br>|(Hair Stylist)<br>|(Wardrobe Stylist)<br>|\
@@ -52,6 +52,7 @@ class MayhemCastingParser:
 				
 			if self.verbosity == 1:
 				print ">>>", castingCount, "returned"
+			return castingCount	
 				
 		else:
 			if self.verbosity == 1:
