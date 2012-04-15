@@ -5,6 +5,8 @@ from MayhemCastingParser import MayhemCastingParser
 from CastingLocationObject import CastingLocationObject
 import pickle
 import time
+import sqlite3 as lite
+from datetime import date
 
 class MayhemMiner:
 	def __init__(self, verbosity):
@@ -20,25 +22,83 @@ class MayhemMiner:
 		elif page == -2:
 			return -2
 		else:
-			self.loadLocation()
+			totalLocation = self.loadLocation()
+			processedLocation = 1
+			
 			for location in self.locationSet:
 				if self.verbosity == 1:
-					print "Launching request on...", location.read()
+					print "Launching request on", location.read(), "(", processedLocation, "of", totalLocation, "hotspots)"
 				request = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
 				request.launchRequest(self.castingDataDict, location.getState(), location.getTown())
 			
 				if self.verbosity == 1:
 					print len(self.castingDataDict), "key-value pairs generated"
-					print "Idle for 2 seconds..."
-				time.sleep(2)
+					print "Idle for 1 second..."
+				time.sleep(1)
+				totalLocation += 1
+				
+			output = open('castingSummary.pkl', 'wb')
+			pickle.dump(self.castingDataDict, output)
+			output.close()
+			self.loadToDB()
 					
 			#for k, v in sorted(self.castingDataDict.iteritems()):
 			#	print k, v.dump()		
-			
-			#output = open('castingSummary.pkl', 'wb')
-			#pickle.dump(self.castingDataDict, output)
-			#output.close()
 		return 0
+		
+	def loadToDB(self):
+		runtime = date.today()
+		formattedDate = str(runtime.year) + '-' + str(runtime.month) + '-' + str(runtime.day)
+		connection = lite.connect('casting.db')
+		
+		caster = list()
+		seek = list()
+		
+		professionType = {"Model": 1,
+						"Photographer": 2,
+						"Makeup Artist": 3,
+						"Hair Stylist": 4,
+						"Wardrobe Stylist": 5,
+						"Retoucher": 7,
+						"Artist/Painter": 9,
+						"Publication": 11,
+						"Casting Director": 13,
+						"Event Planner": 14,
+						"Advertiser": 15,
+						"Filmmaker": 16,
+						"Body Painter": 19,
+						"Clothing Designer": 20,
+						"Approved Agency": 23,
+						"Digital Artist": 24,
+						"": 99}
+		seekType = {"Female Models": 0,
+						"Male Models": 1,
+						"Photographer": 3,
+						"Makeup Artist": 4,
+						"Hair Stylist": 5,
+						"Wardrobe Stylist": 6,
+						"Retoucher": 8,
+						"Artist/Painter": 9,
+						"Body Painter": 10,
+						"Publication": 11,
+						"Filmmaker": 12,
+						"Clothing Designer": 13,
+						"Approved Agency": 14,
+						"Digital Artist": 15,
+						"": 99}
+						
+		for k, v in (self.castingDataDict.iteritems()):
+			caster.append((k, professionType[v.profession], v.city, 0 if v.nudity == "No" else 1, v.compensation, formattedDate))
+			for s in v.seeking:
+				seek.append((k, seekType[s], formattedDate))
+		with connection:
+			for cq in caster:
+				#print cq
+				connection.execute("INSERT INTO Caster (ID, Profession, Location, Nudity, Compensation, Runtime)\
+									VALUES (?, ?, ?, ?, ?, ?)", cq)
+			
+			for sq in seek:
+				connection.execute("INSERT INTO Seek (ID, Seeking, Runtime) VALUES (?, ?, ?)", sq)
 		
 	def loadLocation(self):
 		self.locationSet = set()
@@ -173,11 +233,11 @@ class MayhemMiner:
 		self.locationSet.add(CastingLocationObject("Virgina", 4127, "Blacksburg", 2759663))
 		self.locationSet.add(CastingLocationObject("Virgina", 4127, "Charlottesville", 2759501))
 		self.locationSet.add(CastingLocationObject("Virgina", 4127, "Norfolk", 2759669))
-		self.locationSet.add(CastingLocationObject("Virgin Islands", 8059, "", x))
+		#self.locationSet.add(CastingLocationObject("Virgin Islands", 8059, "", x))
 		self.locationSet.add(CastingLocationObject("Washington", 4128, "Kennewick", 2759815))
 		self.locationSet.add(CastingLocationObject("Washington", 4128, "Seattle", 2759999))
 		self.locationSet.add(CastingLocationObject("Washington", 4128, "Spokane", 2760234))
-		self.locationSet.add(CastingLocationObject("Washington DC", 8056, "", x))
+		#self.locationSet.add(CastingLocationObject("Washington DC", 8056, "", x))
 		self.locationSet.add(CastingLocationObject("West Virgina", 4129, "Parkersburg", 2760601))
 		self.locationSet.add(CastingLocationObject("Wisconsin", 4130, "Fond du Lac", 2760773))
 		self.locationSet.add(CastingLocationObject("Wisconsin", 4130, "La Crosse", 2760873))
@@ -187,3 +247,5 @@ class MayhemMiner:
 		self.locationSet.add(CastingLocationObject("Wyoming", 4131, "Laramie", 2761250))
 		self.locationSet.add(CastingLocationObject("Wyoming", 4131, "Rock Springs", 2761413))
 		self.locationSet.add(CastingLocationObject("Wyoming", 4131, "Thermopolis", 2761314))
+		
+		return len(self.locationSet)

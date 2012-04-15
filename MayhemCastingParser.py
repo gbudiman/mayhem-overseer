@@ -46,7 +46,9 @@ class MayhemCastingParser:
 			and len(ID) == len(seeking):	
 			for iID in ID:
 				# skip key check, doesn't really matter anyway
-				dataDict[int(iID)] = CastingDataObject(iProfession.next(), tuple(set(iSeeking.next()[1:]))[1:]\
+				#t = iSeeking.next()
+				#print iID, [x for x in set(t[1:]) if x != ""]
+				dataDict[int(iID)] = CastingDataObject(iProfession.next(), [x for x in set(iSeeking.next()[1:]) if x != ""]\
 												, iLocation.next(), iNudity.next(), iCompensation.next())
 				castingCount += 1
 				

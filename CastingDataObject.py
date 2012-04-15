@@ -10,3 +10,4 @@ class CastingDataObject:
 	def dump(self):
 		return self.profession, "seeking", self.seeking, "@", self.city\
 			, self.nudity, self.compensation
+			
