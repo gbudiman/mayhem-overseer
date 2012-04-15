@@ -35,7 +35,7 @@ class MayhemMiner:
 					print len(self.castingDataDict), "key-value pairs generated"
 					print "Idle for 1 second..."
 				time.sleep(1)
-				totalLocation += 1
+				processedLocation += 1
 				
 			output = open('castingSummary.pkl', 'wb')
 			pickle.dump(self.castingDataDict, output)
