@@ -26,17 +26,18 @@ class MayhemMiner:
 					print "Launching request on...", location.read()
 				request = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
 				request.launchRequest(self.castingDataDict, location.getState(), location.getTown())
-			#for k, v in sorted(self.castingDataDict.iteritems()):
-			#	print k, v.dump()
-				time.sleep(2)
+			
 				if self.verbosity == 1:
 					print len(self.castingDataDict), "key-value pairs generated"
 					print "Idle for 2 seconds..."
+				time.sleep(2)
 					
+			#for k, v in sorted(self.castingDataDict.iteritems()):
+			#	print k, v.dump()		
 			
-			output = open('castingSummary.pkl', 'wb')
-			pickle.dump(self.castingDataDict, output)
-			output.close()
+			#output = open('castingSummary.pkl', 'wb')
+			#pickle.dump(self.castingDataDict, output)
+			#output.close()
 		return 0
 		
 	def loadLocation(self):
@@ -172,11 +173,11 @@ class MayhemMiner:
 		self.locationSet.add(CastingLocationObject("Virgina", 4127, "Blacksburg", 2759663))
 		self.locationSet.add(CastingLocationObject("Virgina", 4127, "Charlottesville", 2759501))
 		self.locationSet.add(CastingLocationObject("Virgina", 4127, "Norfolk", 2759669))
-		#self.locationSet.add(CastingLocationObject("Virgin Islands", 8059, "", x))
+		self.locationSet.add(CastingLocationObject("Virgin Islands", 8059, "", x))
 		self.locationSet.add(CastingLocationObject("Washington", 4128, "Kennewick", 2759815))
 		self.locationSet.add(CastingLocationObject("Washington", 4128, "Seattle", 2759999))
 		self.locationSet.add(CastingLocationObject("Washington", 4128, "Spokane", 2760234))
-		#self.locationSet.add(CastingLocationObject("Washington DC", 8056, "", x))
+		self.locationSet.add(CastingLocationObject("Washington DC", 8056, "", x))
 		self.locationSet.add(CastingLocationObject("West Virgina", 4129, "Parkersburg", 2760601))
 		self.locationSet.add(CastingLocationObject("Wisconsin", 4130, "Fond du Lac", 2760773))
 		self.locationSet.add(CastingLocationObject("Wisconsin", 4130, "La Crosse", 2760873))
