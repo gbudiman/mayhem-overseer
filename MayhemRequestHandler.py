@@ -5,6 +5,7 @@ import urllib2
 import re
 import sys
 from MayhemCastingParser import MayhemCastingParser
+import time
 
 class MayhemRequestHandler:
 	def __init__(self, URL, page, verbosity):
@@ -49,7 +50,12 @@ class MayhemRequestHandler:
 									, ('search_mm_id', "")])
 
 		while True:
-			t = self.page.opener.open(self.URL + str(self.currentPage) + '/?' + params)
+			try:
+				t = self.page.opener.open(self.URL + str(self.currentPage) + '/?' + params, '', 10)
+			except:
+				print "!!! Timeout. Retrying in 5 seconds..."
+				time.sleep(5)
+				continue
 			self.result = t.read()
 			
 			if re.search(self.successStringSearch, self.result) != None:
