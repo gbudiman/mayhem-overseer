@@ -45,4 +45,3 @@ class MayhemCookiesHandler:
 		self.opener.open(self.loginLaunchURL, self.parameters)
 		castingPage = self.opener.open(self.castingURL)
 		return re.search(self.loginConfirmation, castingPage.read())
-		

@@ -33,8 +33,8 @@ class MayhemMiner:
 			
 				if self.verbosity == 1:
 					print len(self.castingDataDict), "key-value pairs generated"
-					print "Idle for 1 second..."
-				time.sleep(1)
+					print "Idle for 5 seconds..."
+				time.sleep(5)
 				processedLocation += 1
 				
 			output = open('castingSummary.pkl', 'wb')
@@ -88,14 +88,14 @@ class MayhemMiner:
 						"": 99}
 						
 		for k, v in (self.castingDataDict.iteritems()):
-			caster.append((k, professionType[v.profession], v.city, 0 if v.nudity == "No" else 1, v.compensation, formattedDate))
+			caster.append((k, professionType[v.profession], v.town, v.state, 0 if v.nudity == "No" else 1, v.compensation, formattedDate))
 			for s in v.seeking:
 				seek.append((k, seekType[s], formattedDate))
 		with connection:
 			for cq in caster:
 				#print cq
-				connection.execute("INSERT INTO Caster (ID, Profession, Location, Nudity, Compensation, Runtime)\
-									VALUES (?, ?, ?, ?, ?, ?)", cq)
+				connection.execute("INSERT INTO Caster (ID, Profession, Town, State, Nudity, Compensation, Runtime)\
+									VALUES (?, ?, ?, ?, ?, ?, ?)", cq)
 			
 			for sq in seek:
 				connection.execute("INSERT INTO Seek (ID, Seeking, Runtime) VALUES (?, ?, ?)", sq)
@@ -247,5 +247,5 @@ class MayhemMiner:
 		self.locationSet.add(CastingLocationObject("Wyoming", 4131, "Laramie", 2761250))
 		self.locationSet.add(CastingLocationObject("Wyoming", 4131, "Rock Springs", 2761413))
 		self.locationSet.add(CastingLocationObject("Wyoming", 4131, "Thermopolis", 2761314))
-		
+
 		return len(self.locationSet)
