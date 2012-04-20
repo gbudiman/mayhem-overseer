@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 class CastingLocationObject:
-	def __init__(self, state, stateID, town, townID):
+	def __init__(self, country, state, stateID):
+		self.country = country
 		self.state = state
 		self.stateID = stateID
-		self.town = town
-		self.townID = townID
 		
 	def read(self):
-		return self.state + "." + self.town
+		return self.country + "." + self.state 
 		
+	def getCountry(self):
+		return self.country
+
 	def getState(self):
 		return self.stateID
 		
-	def getTown(self):
-		return self.townID
