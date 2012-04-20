@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 class CastingDataObject:
-	def __init__(self, profession, seeking, town, state, nudity, compensation):
+	def __init__(self, profession, seeking, town, state, country, nudity, compensation):
 		self.profession = profession
 		self.seeking = seeking
 		self.town = town
 		self.state = state
+		self.country = country
 		self.nudity = nudity
 		self.compensation = compensation
 		

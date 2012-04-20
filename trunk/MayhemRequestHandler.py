@@ -20,7 +20,7 @@ class MayhemRequestHandler:
 		self.verbosity = verbosity
 		self.castingParser = MayhemCastingParser(self.verbosity)
 		
-	def launchRequest(self, castingDataDict, stateID, townID):		
+	def launchRequest(self, castingDataDict, countryID, stateID):		
 		params = urllib.urlencode([('fm_action', "Search")
 									, ('search_type', "casting for")
 									, ('m_search_type[]', "0")
@@ -37,10 +37,10 @@ class MayhemRequestHandler:
 									, ('m_search_type[]', "13")
 									, ('m_search_type[]', "14")
 									, ('m_search_type[]', "15")
-									, ('cc_country', "US")
+									, ('cc_country', countryID)
 									, ('cc_state', stateID)
-									, ('cc_city', townID)
-									, ('search_mile_range', "1.00")
+									, ('cc_city', '')
+									, ('search_mile_range', '')
 									, ('fm_button', " ")
 									, ('search_start_date', "")
 									, ('search_end_date', "")

@@ -48,7 +48,7 @@ class MayhemCastingParser:
 				# skip key check, doesn't really matter anyway
 				hotspot = iLocation.next().strip().split(',')
 				dataDict[int(iID)] = CastingDataObject(iProfession.next(), [x for x in set(iSeeking.next()[1:]) if x != ""]\
-												, hotspot[0].strip(), hotspot[1].strip(), iNudity.next(), iCompensation.next())
+												, hotspot[0].strip(), hotspot[1].strip(), hotspot[2].strip(), iNudity.next(), iCompensation.next())
 				castingCount += 1
 				
 			if self.verbosity == 1:
