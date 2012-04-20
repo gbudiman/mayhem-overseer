@@ -33,8 +33,8 @@ class MayhemMiner:
 			
 				if self.verbosity == 1:
 					print len(self.castingDataDict), "key-value pairs generated"
-					print "Idle for 5 seconds..."
-				time.sleep(5)
+					print "Idle for 2 seconds..."
+				time.sleep(2)
 				processedLocation += 1
 				
 			output = open('castingSummary.pkl', 'wb')
