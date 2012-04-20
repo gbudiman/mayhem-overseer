@@ -3551,7 +3551,6 @@
 <option value="2817126">Beauceville</option>
 <option value="2835833">Beauharnois</option>
 <option value="2826971">Beaulac-Garthby</option>
-<option value="2817128">BeauprÃ&copy;</option>
 <option value="2827298">Beaupre</option>
 <option value="2835410">Becancour</option>
 <option value="2817132">Bedford</option>
@@ -3653,7 +3652,6 @@
 <option value="2827302">Courcelette</option>
 <option value="2817253">Cowansville</option>
 <option value="2817254">Crabtree</option>
-<option value="2817271">DÃ&copy;gelis</option>
 <option value="2835869">D'Alembert</option>
 <option value="2827036">Dalmas</option>
 <option value="2835697">Danford Lake</option>
@@ -3669,7 +3667,6 @@
 <option value="2835719">Desmaraisville</option>
 <option value="2835753">Desmeloizes</option>
 <option value="2835845">Deux-Montagnes</option>
-<option value="2817278">DisraÃ«li</option>
 <option value="2827068">Disraeli</option>
 <option value="2835453">Dixville</option>
 <option value="2817279">Dolbeau</option>
@@ -3722,7 +3719,6 @@
 <option value="2835759">Gallichan</option>
 <option value="2827231">Gallix</option>
 <option value="2827340">Gascons</option>
-<option value="2817344">GaspÃ&copy;</option>
 <option value="2835375">Gaspe</option>
 <option value="2826792">Gatineau</option>
 <option value="2817345">Gentilly</option>
@@ -3733,7 +3729,6 @@
 <option value="2835700">Gracefield</option>
 <option value="2817357">Granby</option>
 <option value="2835372">Grande-Entree</option>
-<option value="2817363">Grande-RiviÃ¨re</option>
 <option value="2827342">Grande-Riviere</option>
 <option value="2827343">Grande-Riviere-Ouest</option>
 <option value="2827014">Grandes-Bergeronnes</option>
@@ -3748,7 +3743,6 @@
 <option value="2827264">Grosses-Roches</option>
 <option value="2835760">Guerin</option>
 <option value="2835721">Guyenne</option>
-<option value="2817392">HÃ&copy;bertville</option>
 <option value="2827078">Ham-Nord</option>
 <option value="2827233">Harrington Harbour</option>
 <option value="2817386">Hauterive</option>
@@ -3816,7 +3810,6 @@
 <option value="2817446">Lachute</option>
 <option value="2835398">Lac-Kenogami</option>
 <option value="2817448">Lac-Lapierre</option>
-<option value="2817449">Lac-MÃ&copy;gantic</option>
 <option value="2835381">Lac-Megantic</option>
 <option value="2817450">Lacolle</option>
 <option value="2835655">La Conception</option>
@@ -3882,7 +3875,6 @@
 <option value="2835767">Laverlochere</option>
 <option value="2835571">La Visitation-De-L'Ile-Dupas</option>
 <option value="2835501">La Visitation-De-Yamaska</option>
-<option value="2817473">Lebel-sur-QuÃ&copy;villon</option>
 <option value="2835727">Lebel-sur-Quevillon</option>
 <option value="2817474">Le Bic</option>
 <option value="2826999">Leclercville</option>
@@ -3907,7 +3899,6 @@
 <option value="2835323">L'Ile-Michon</option>
 <option value="2835850">L'ile-Perrot</option>
 <option value="2835468">Lingwick</option>
-<option value="2817484">LiniÃ¨re</option>
 <option value="2835311">L'Isle-aux-Grues</option>
 <option value="2835312">L'Islet</option>
 <option value="2835313">L'Isletville</option>
@@ -3944,10 +3935,8 @@
 <option value="2835458">Martinville</option>
 <option value="2835843">Mascouche</option>
 <option value="2827045">Mashteuiatsh</option>
-<option value="2817520">MaskinongÃ&copy;</option>
 <option value="2835555">Maskinonge</option>
 <option value="2835503">Massueville</option>
-<option value="2817533">MÃ&copy;tabetchouan</option>
 <option value="2817521">Matagami</option>
 <option value="2817522">Matane</option>
 <option value="2827270">Matapedia</option>
@@ -4146,7 +4135,6 @@
 <option value="2817694">Saint-Ambroise</option>
 <option value="2835551">Saint-Ambroise-de-Kildare</option>
 <option value="2827136">Saint-Anaclet</option>
-<option value="2817695">Saint-AndrÃ&copy;-Avellin</option>
 <option value="2835674">Saint-Andre-Avellin</option>
 <option value="2835675">Saint-Andre-d'Argenteuil</option>
 <option value="2827160">Saint-Andre-de-Kamouraska</option>
@@ -4158,7 +4146,6 @@
 <option value="2826996">Saint-Antoine-de-Tilly</option>
 <option value="2835588">Saint-Antoine-sur-Richelieu</option>
 <option value="2827161">Saint-Antonin</option>
-<option value="2817723">Saint-Ãphrem-de-Tring</option>
 <option value="2817699">Saint-Apollinaire</option>
 <option value="2835538">Saint-Armand</option>
 <option value="2827162">Saint-Arsene</option>
@@ -4189,7 +4176,6 @@
 <option value="2835441">Saint-Camille</option>
 <option value="2827102">Saint-Camille-de-Bellechasse</option>
 <option value="2817703">Saint-Canut</option>
-<option value="2817705">Saint-CÃ&copy;saire</option>
 <option value="2827319">Saint-Casimir</option>
 <option value="2835474">Saint-Celestin</option>
 <option value="2835589">Saint-Cesaire</option>
@@ -4351,8 +4337,6 @@
 <option value="2835510">Sainte-Victoire-de-Sorel</option>
 <option value="2817725">Saint-Fabien</option>
 <option value="2827097">Saint-Fabien-de-Panet</option>
-<option value="2817726">Saint-FÃ&copy;licien</option>
-<option value="2817727">Saint-FÃ&copy;lix-de-Valois</option>
 <option value="2835652">Saint-Faustin-Lac-Carre</option>
 <option value="2835402">Saint-Felicien</option>
 <option value="2835718">Saint-Felix-de-Dalquier</option>
@@ -4374,7 +4358,6 @@
 <option value="2835570">Saint-Gabriel-de-Brandon</option>
 <option value="2827139">Saint-Gabriel-de-Rimouski</option>
 <option value="2827333">Saint-Gabriel-de-Valcartier</option>
-<option value="2817729">Saint-GÃ&copy;dÃ&copy;on</option>
 <option value="2827049">Saint-Gedeon</option>
 <option value="2827204">Saint-Gedeon-de-Beauce</option>
 <option value="2817731">Saint-Georges</option>
@@ -4388,15 +4371,12 @@
 <option value="2827107">Saint-Gervais</option>
 <option value="2827322">Saint-Gilbert</option>
 <option value="2827360">Saint-Godefroi</option>
-<option value="2817733">Saint-GrÃ&copy;goire</option>
 <option value="2835477">Saint-Guillaume</option>
 <option value="2827144">Saint-Guy</option>
-<option value="2817734">Saint-Henri-de-LÃ&copy;vis</option>
 <option value="2827108">Saint-Henri-de-Levis</option>
 <option value="2835466">Saint-Hermenegilde</option>
 <option value="2827323">Saint-Hilarion</option>
 <option value="2835855">Saint-Hippolyte</option>
-<option value="2817735">Saint-HonorÃ&copy;</option>
 <option value="2827028">Saint-Honore-de-Chicoutimi</option>
 <option value="2827205">Saint-Honore-de-Shenley</option>
 <option value="2827176">Saint-Honore-de-Temiscouata</option>
@@ -4411,7 +4391,6 @@
 <option value="2817738">Saint-Jacques</option>
 <option value="2827070">Saint-Jacques-de-Leeds</option>
 <option value="2835543">Saint-Jacques-le-Mineur</option>
-<option value="2817742">Saint-JÃ&copy;rÃ´me</option>
 <option value="2835593">Saint-Jean-Baptiste</option>
 <option value="2835391">Saint-Jean-Chrysostome</option>
 <option value="2835383">Saint-Jean-De-Brebeuf</option>
@@ -4467,7 +4446,6 @@
 <option value="2827113">Saint-Magloire</option>
 <option value="2827114">Saint-Malachie</option>
 <option value="2835720">Saint-Marc-de-Figuery</option>
-<option value="2817750">Saint-Marc-des-CarriÃ¨res</option>
 <option value="2827326">Saint-Marc-des-Carrieres</option>
 <option value="2827151">Saint-Marc-du-Lac-Long</option>
 <option value="2835524">Saint-Marcel-de-Richelieu</option>
@@ -4519,8 +4497,6 @@
 <option value="2835400">Saint-Prime</option>
 <option value="2817758">Saint-Prosper</option>
 <option value="2827208">Saint-Prosper-de-Dorchester</option>
-<option value="2817762">Saint-RÃ&copy;mi</option>
-<option value="2817760">Saint-RaphaÃ«l</option>
 <option value="2817761">Saint-Raymond</option>
 <option value="2835386">Saint-Redempteur</option>
 <option value="2835597">Saint-Remi</option>
@@ -4582,7 +4558,6 @@
 <option value="2827248">Schefferville</option>
 <option value="2817780">Senneterre</option>
 <option value="2835438">Senneville</option>
-<option value="2817781">Sept-Ãles</option>
 <option value="2835364">Sept-Iles</option>
 <option value="2817784">Shawinigan</option>
 <option value="2835411">Shawinigan-Sud</option>
@@ -4624,7 +4599,6 @@
 <option value="2835528">St-Valerien</option>
 <option value="2827022">Tadoussac</option>
 <option value="2827054">Taillon</option>
-<option value="2817841">TÃ&copy;miscaming</option>
 <option value="2835784">Taschereau</option>
 <option value="2835613">Tasiujaq</option>
 <option value="2835785">Temiscaming</option>
@@ -4651,7 +4625,6 @@
 <option value="2835862">Val-Des-Monts</option>
 <option value="2835335">Val-d'Espoir</option>
 <option value="2817874">Val-d'Or</option>
-<option value="2817875">VallÃ&copy;e-Jonction</option>
 <option value="2827011">Vallee-Jonction</option>
 <option value="2835668">Val-Morin</option>
 <option value="2835786">Val-Paradis</option>
@@ -5179,5 +5152,4 @@
 <option value="2836867">Zenon Park</option>
 <option value="2817525">Mayo</option>
 <option value="2817918">Whitehorse</option>
-</select>
 </root>
