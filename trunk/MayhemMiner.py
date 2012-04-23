@@ -88,6 +88,8 @@ class MayhemMiner:
 						"": 99}
 						
 		for k, v in (self.castingDataDict.iteritems()):
+			# Nudity: both will be marked as 1, same as nudity: yes. Nudity: no marked as 0.
+			# Keep it simple!
 			caster.append((k, professionType[v.profession], v.town, v.state, v.country, 0 if v.nudity == "No" else 1, v.compensation, formattedDate))
 			for s in v.seeking:
 				seek.append((k, seekType[s], formattedDate))

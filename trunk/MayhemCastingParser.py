@@ -18,7 +18,7 @@ class MayhemCastingParser:
 (Publication)<br>|(Filmmaker)<br>|(Clothing Designer)<br>|\
 (Approved Agency)<br>|(Digital Artist)<br>)+[\n\r\t]+</td>", result)
 		location = re.findall("<td colspan=\"3\">[\n\r\t]*([A-Z, \'\-a-z]+)<br />", result)
-		nudity = re.findall("Nudity:</b><br/>[\n\r\t]*(Yes|No)", result)
+		nudity = re.findall("Nudity:</b><br/>[\n\r\t]*(Yes|No|Both)", result)
 		compensation = re.findall("<td>(Paid|TFMMVIP|Negotiable|TF|Unpaid Test)", result)
 		
 		#for d in profession:
