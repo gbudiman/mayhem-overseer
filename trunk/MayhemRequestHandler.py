@@ -43,7 +43,8 @@ class MayhemRequestHandler:
 			self.result = t.read()
 			
 			if re.search(self.successStringSearch, self.result) != None:
-				self.countNumberOfPages(self.verbosity)
+				if self.pageCount == 0:
+					self.countNumberOfPages(self.verbosity)
 				
 				if self.verbosity >= 2:
 					print self.URL + params
@@ -101,7 +102,8 @@ class MayhemRequestHandler:
 			
 			if re.search(self.successStringSearch, self.result) != None:
 				# Only need to be checked once to get number of pages
-				self.countNumberOfPages(self.verbosity)
+				if self.pageCount == 0:
+					self.countNumberOfPages(self.verbosity)
 						
 				if self.verbosity >= 2:
 					print self.URL + params
