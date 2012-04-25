@@ -11,11 +11,16 @@ class MayhemBrowseParser(MayhemCastingParser):
 	def parse(self, dataDict, result):
 		profession = re.findall("[\"][>]([A-Z a-z/]*)</div>[\n\r\t]+(?:</td>)", result)
 		location = re.findall("([A-Z \'\-a-z]+)[,][ ]([A-Z \'\-a-z]+)[,][ ]([A-Z \'\-a-z]+)[\t]+(?:</td>)", result)
+		gender = re.findall("(?:data1\">)([FeMmalen/]+)", result)
+		lastActivity = re.findall("([A-Za-z.]+)[ ]([0-9]{1,2})[,][ ]([0-9]{4})", result)
+		#additionalLocation = re.findall
 		
 		print len(profession)
 		print len(location)
+		print len(gender)
+		print len(lastActivity)
 		iLocation = iter(location)
+		iGender = iter(gender)
+		iLastActivity = iter(lastActivity)
 		for d in profession:
-			print d
-		for d in location:
-			print d
+			print d, iLocation.next(), iGender.next(), iLastActivity.next()
