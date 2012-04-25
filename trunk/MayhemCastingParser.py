@@ -4,7 +4,7 @@ import sys
 import string
 from CastingDataObject import CastingDataObject
 
-class MayhemCastingParser:
+class MayhemCastingParser(object):
 	def __init__(self, verbosity):
 		self.existingCasting = []
 		self.verbosity = verbosity
