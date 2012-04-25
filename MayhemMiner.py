@@ -12,6 +12,7 @@ class MayhemMiner:
 	def __init__(self, verbosity):
 		self.verbosity = verbosity
 		self.castingDataDict = {}
+		self.browseDataDict = {}
 		self.mine()
 		
 	def mine(self):
@@ -28,8 +29,10 @@ class MayhemMiner:
 			for location in self.locationSet:
 				if self.verbosity == 1:
 					print "Launching request on", location.read(), "(", processedLocation, "of", totalLocation, "hotspots)"
-				request = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
-				request.launchRequest(self.castingDataDict, location.getCountry(), location.getState())
+				casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
+				casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
+				#browse = MayhemRequestHandler("http://www.modelmayhem.com/browse/results/", page, self.verbosity)
+				#browse.launchBrowseRequest(self.browseDataDict, location.getCountry(), location.getState())
 			
 				if self.verbosity == 1:
 					print len(self.castingDataDict), "key-value pairs generated"

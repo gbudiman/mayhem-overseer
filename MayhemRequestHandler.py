@@ -5,6 +5,7 @@ import urllib2
 import re
 import sys
 from MayhemCastingParser import MayhemCastingParser
+from MayhemBrowseParser import MayhemBrowseParser
 import time
 
 class MayhemRequestHandler:
@@ -16,11 +17,51 @@ class MayhemRequestHandler:
 		self.multiplePagesSearch = "thepagenums"
 		self.pageCount = 0
 		self.currentPage = 1
-		self.pageModulus = 50
 		self.verbosity = verbosity
 		self.castingParser = MayhemCastingParser(self.verbosity)
 		
-	def launchRequest(self, castingDataDict, countryID, stateID):		
+	def launchBrowseRequest(self, browseDataDict, countryID, stateID):
+		self.membersParser = MayhemBrowseParser(self.verbosity)
+		self.pageModulus = 40
+		params = urllib.urlencode([('fm_action', "search")
+									, ('artist_type[]', '')
+									, ('display', 'details')
+									, ('sort_by', '2')
+									, ('country', countryID)
+									, ('state', stateID)
+									, ('city', '')
+									, ('toggle_counter', '6')])
+									
+		while True:
+			try:
+				t = self.page.opener.open(self.URL + str(self.currentPage) + '/?' + params, '', 10)
+				#print self.URL + str(self.currentPage) + '/?' + params
+			except:
+				print "!!! Timeout. Retrying in 5 seconds..."
+				time.sleep(5)
+				continue
+			self.result = t.read()
+			
+			if re.search(self.successStringSearch, self.result) != None:
+				self.countNumberOfPages(self.verbosity)
+				
+				if self.verbosity >= 2:
+					print self.URL + params
+					print self.result
+					
+				if self.verbosity >= 1:
+					print "Page", self.currentPage, "of", self.pageCount, ":" \
+						, sys.getsizeof(self.result)/1024, "KB returned"
+						
+			browseCount = self.membersParser.parse(browseDataDict, self.result)
+			if self.currentPage == self.pageCount or browseCount <= 0:
+				break
+			else:
+				self.currentPage += 1	
+		
+	def launchCastingRequest(self, castingDataDict, countryID, stateID):	
+		self.castingParser = MayhemCastingParser(self.verbosity)
+		self.pageModulus = 50
 		params = urllib.urlencode([('fm_action', "Search")
 									, ('search_type', "casting for")
 									, ('m_search_type[]', "0")
@@ -60,11 +101,7 @@ class MayhemRequestHandler:
 			
 			if re.search(self.successStringSearch, self.result) != None:
 				# Only need to be checked once to get number of pages
-				if self.pageCount == 0:
-					if re.search(self.multiplePagesSearch, self.result) != None:
-						self.countNumberOfPages(self.verbosity)
-					else:
-						self.pageCount = 1
+				self.countNumberOfPages(self.verbosity)
 						
 				if self.verbosity >= 2:
 					print self.URL + params
@@ -81,7 +118,7 @@ class MayhemRequestHandler:
 				self.currentPage += 1
 				
 	def countNumberOfPages(self, verbosity):
-		resultCount = re.search(".(results )[0-9\-]+[ ]+(of)[ ]+([0-9]+)", self.result)
+		resultCount = re.search(".(results )[0-9\- ]+[ ]+(of)[ ]+([0-9]+)", self.result)
 		self.pageCount = (int(resultCount.group(3)) - 1) / self.pageModulus + 1
 		if verbosity == 1:
 			print self.pageCount, "pages to search"
