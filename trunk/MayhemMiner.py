@@ -29,8 +29,8 @@ class MayhemMiner:
 			for location in self.locationSet:
 				if self.verbosity == 1:
 					print "Launching request on", location.read(), "(", processedLocation, "of", totalLocation, "hotspots)"
-				casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
-				casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
+				#casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
+				#casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
 				browse = MayhemRequestHandler("http://www.modelmayhem.com/browse/results/", page, self.verbosity)
 				browse.launchBrowseRequest(self.browseDataDict, location.getCountry(), location.getState())
 			
@@ -44,7 +44,7 @@ class MayhemMiner:
 			output = open('castingSummary.pkl', 'wb')
 			pickle.dump(self.castingDataDict, output)
 			output.close()
-			#self.loadToDB()
+			self.loadToDB()
 					
 			#for k, v in sorted(self.castingDataDict.iteritems()):
 			#	print k, v.dump()		
@@ -71,6 +71,7 @@ class MayhemMiner:
 						"Event Planner": 14,
 						"Advertiser": 15,
 						"Filmmaker": 16,
+						"Film/TV Producer": 16,
 						"Body Painter": 19,
 						"Clothing Designer": 20,
 						"Approved Agency": 23,
@@ -101,6 +102,9 @@ class MayhemMiner:
 			for s in v.seeking:
 				seek.append((k, seekType[s], formattedDate))
 		with connection:
+			for mq in member:
+				connection.execute("INSERT OR REPLACE INTO Member (MID, Profession, Town, State, Country, Gender, LastActivity, ShootNudes, Compensation, Experience)\
+									VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", mq)
 			for cq in caster:
 				#print cq
 				connection.execute("INSERT INTO Caster (ID, Profession, Town, State, Country, Nudity, Compensation, Runtime)\
@@ -112,18 +116,18 @@ class MayhemMiner:
 	def loadLocation(self):
 		self.locationSet = set()
 		self.locationSet.add(CastingLocationObject('CA', "Alberta", 7532))
-		#self.locationSet.add(CastingLocationObject('CA', "British Columbia", 7529))
-		#self.locationSet.add(CastingLocationObject('CA', "Manitoba", 7535))
-		#self.locationSet.add(CastingLocationObject('CA', "New Brunswick", 7539))
-		#self.locationSet.add(CastingLocationObject('CA', "Newfoundland and Labrador", 7537))
-		#self.locationSet.add(CastingLocationObject('CA', "Northwest Territories", 7533))
-		#self.locationSet.add(CastingLocationObject('CA', "Nova Scotia", 7536))
-		#self.locationSet.add(CastingLocationObject('CA', "Nunavut", 7540))
-		#self.locationSet.add(CastingLocationObject('CA', "Ontario", 7530))
-		#self.locationSet.add(CastingLocationObject('CA', "Prince Edward Island", 7534))
-		#self.locationSet.add(CastingLocationObject('CA', "Quebec", 7531))
-		#self.locationSet.add(CastingLocationObject('CA', "Saskatchewan", 7538))
-		#self.locationSet.add(CastingLocationObject('CA', "Yukon", 7541))
+		self.locationSet.add(CastingLocationObject('CA', "British Columbia", 7529))
+		self.locationSet.add(CastingLocationObject('CA', "Manitoba", 7535))
+		self.locationSet.add(CastingLocationObject('CA', "New Brunswick", 7539))
+		self.locationSet.add(CastingLocationObject('CA', "Newfoundland and Labrador", 7537))
+		self.locationSet.add(CastingLocationObject('CA', "Northwest Territories", 7533))
+		self.locationSet.add(CastingLocationObject('CA', "Nova Scotia", 7536))
+		self.locationSet.add(CastingLocationObject('CA', "Nunavut", 7540))
+		self.locationSet.add(CastingLocationObject('CA', "Ontario", 7530))
+		self.locationSet.add(CastingLocationObject('CA', "Prince Edward Island", 7534))
+		self.locationSet.add(CastingLocationObject('CA', "Quebec", 7531))
+		self.locationSet.add(CastingLocationObject('CA', "Saskatchewan", 7538))
+		self.locationSet.add(CastingLocationObject('CA', "Yukon", 7541))
 		
 		#self.locationSet.add(CastingLocationObject('US', "Alabama", 4078))
 		#self.locationSet.add(CastingLocationObject('US', "Alaska", 4079))
