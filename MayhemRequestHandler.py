@@ -27,6 +27,7 @@ class MayhemRequestHandler:
 									, ('artist_type[]', '')
 									, ('display', 'details')
 									, ('sort_by', '2')
+									, ('logged_days', '3') # speed up query being run daily
 									, ('country', countryID)
 									, ('state', stateID)
 									, ('city', '')

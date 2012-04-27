@@ -12,7 +12,7 @@ class MayhemBrowseParser(MayhemCastingParser):
 	def parse(self, dataDict, result):
 		profession = re.findall("[\"][>]([A-Z a-z/]*)</div>[\n\r\t]+(?:</td>)", result)
 		ID = re.findall("(?:<a href=\"/)([0-9]+)(?:\" target)", result)
-		location = re.findall("([A-Z \'\-a-z]+)[,][ ]([A-Z \'\-a-z0-9]+)[,][ ]([A-Z \'\-a-z]+)[\t]+(?:</td>)", result)
+		location = re.findall("([\w ]+)[,][ ]([\w ]+)[,][ ]([A-Z \'\-a-z]+)[\t]+(?:</td>)", result)
 		gender = re.findall("(?:Gender:</td>)[\n\r\t]+(?:<td class=\"data1\">)(Female|Male|n/a)(?:</td>)", result)
 		lastActivity = re.findall("([A-Za-z.]+)[ ]([0-9]{1,2})[,][ ]([0-9]{4})", result)
 		compensation = re.findall("(?:Compensation:</td>)[\n\r\t]+(?:<td>)([A-Z/ a-z]+)(?:</td>)", result)

@@ -25,10 +25,9 @@ class BrowseDataObject:
 						, 'Very Experienced': 3
 						, 'n/a': 4}
 		self.profession = profession
-		hotspot = location.strip().split(',')
-		self.country = hotspot[2].strip()
-		self.state = hotspot[1].strip()
-		self.town = hotspot[0].strip()
+		self.country = location[2].strip()
+		self.state = location[1].strip()
+		self.town = location[0].strip()
 		if gender == 'Male':
 			self.gender = 0
 		elif gender == 'Female':
