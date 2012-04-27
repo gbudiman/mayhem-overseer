@@ -29,13 +29,14 @@ class MayhemMiner:
 			for location in self.locationSet:
 				if self.verbosity == 1:
 					print "Launching request on", location.read(), "(", processedLocation, "of", totalLocation, "hotspots)"
-				#casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
-				#casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
+				casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
+				casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
 				browse = MayhemRequestHandler("http://www.modelmayhem.com/browse/results/", page, self.verbosity)
 				browse.launchBrowseRequest(self.browseDataDict, location.getCountry(), location.getState())
 			
 				if self.verbosity == 1:
-					print len(self.castingDataDict), "key-value pairs generated"
+					print len(self.castingDataDict), "casting key-value pairs generated"
+					print len(self.browseDataDict), "browse key-value pairs generated"
 					print "Idle for 2 seconds..."
 				time.sleep(2)
 				processedLocation += 1
@@ -43,7 +44,7 @@ class MayhemMiner:
 			output = open('castingSummary.pkl', 'wb')
 			pickle.dump(self.castingDataDict, output)
 			output.close()
-			self.loadToDB()
+			#self.loadToDB()
 					
 			#for k, v in sorted(self.castingDataDict.iteritems()):
 			#	print k, v.dump()		
@@ -56,6 +57,7 @@ class MayhemMiner:
 		
 		caster = list()
 		seek = list()
+		member = list()
 		
 		professionType = {"Model": 1,
 						"Photographer": 2,
@@ -90,6 +92,8 @@ class MayhemMiner:
 						"Digital Artist": 15,
 						"": 99}
 						
+		for k, v in (self.browseDataDict.iteritems()):
+			member.append((k, professionType[v.profession], v.town, v.state, v.country, v.gender, v.lastActivity, v.shootNudes, v.compensation, v.experience))
 		for k, v in (self.castingDataDict.iteritems()):
 			# Nudity: both will be marked as 1, same as nudity: yes. Nudity: no marked as 0.
 			# Keep it simple!
