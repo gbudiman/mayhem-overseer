@@ -51,8 +51,8 @@ class MayhemCastingParser(object):
 												, hotspot[0].strip(), hotspot[1].strip(), hotspot[2].strip(), iNudity.next(), iCompensation.next())
 				castingCount += 1
 				
-			if self.verbosity == 1:
-				print ">>>", castingCount, "returned"
+			#if self.verbosity == 1:
+			#	print ">>>", castingCount, "returned"
 			return castingCount	
 				
 		else:

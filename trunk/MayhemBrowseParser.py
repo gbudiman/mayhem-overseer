@@ -12,8 +12,8 @@ class MayhemBrowseParser(MayhemCastingParser):
 	def parse(self, dataDict, result):
 		profession = re.findall("[\"][>]([A-Z a-z/]*)</div>[\n\r\t]+(?:</td>)", result)
 		ID = re.findall("(?:<a href=\"/)([0-9]+)(?:\" target)", result)
-		location = re.findall("([^,\n\r\t#]+)[,][ ]([^,\n\r\t#]+)[,][ ]([A-Z \'\-a-z]+)[\t]+(?:</td>)", result, re.UNICODE)
-		gender = re.findall("(?:Gender:</td>)[\n\r\t]+(?:<td class=\"data1\">)(Female|Male|n/a)(?:</td>)", result)
+		location = re.findall("([^,\n\r\t#]+)[,][ ]([^,\n\r\t#]+)[,][ ]([A-Z \'\-a-z\(\)]+)[\t]+(?:</td>)", result, re.UNICODE)
+		gender = re.findall("(?:Gender:</td>)[\n\r\t]+(?:<td class=\"data1\">)(Female|Male|n/a|)(?:</td>)", result)
 		lastActivity = re.findall("([A-Za-z.]+)[ ]([0-9]{1,2})[,][ ]([0-9]{4})", result)
 		compensation = re.findall("(?:Compensation:</td>)[\n\r\t]+(?:<td>)([A-Z/ a-z]+)(?:</td>)", result)
 		experience = re.findall("(?:Experience:</td>)[\n\r\t]+(?:<td>)([A-Z/ a-z]+)(?:</td>)", result)
@@ -47,8 +47,8 @@ class MayhemBrowseParser(MayhemCastingParser):
 				#dataDict[int(iID)].dump()
 				browseCount += 1
 				
-			if self.verbosity == 1:
-				print ">>>", browseCount, "returned"
+			#if self.verbosity == 1:
+			#	print ">>>", browseCount, "returned"
 			return browseCount
 		else:
 			if self.verbosity == 1:
