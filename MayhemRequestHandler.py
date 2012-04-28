@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 import httplib
 import urllib
 import urllib2
@@ -19,10 +20,26 @@ class MayhemRequestHandler:
 		self.currentPage = 1
 		self.verbosity = verbosity
 		self.castingParser = MayhemCastingParser(self.verbosity)
+		self.terminalString = ''
+		
+	def animateTerminal(self, title, count):
+		try:
+			repeatCount = int(float(self.currentPage) / float(self.pageCount) * 32.0)
+		except ZeroDivisionError:
+			repeatCount  = 32
+		whiteSpace = 32 - repeatCount
+		sys.stdout.write('\b' * (len(self.terminalString) + 1))
+		sys.stdout.flush()
+		self.terminalString = ''
+		self.terminalString += title + ' [' + '=' * repeatCount + '>' + ' ' * whiteSpace + '] '
+		self.terminalString += str(self.currentPage) + '/' + str(self.pageCount) + ' (' + str(count) + ')'
+		sys.stdout.write(self.terminalString)
+		sys.stdout.flush()
 		
 	def launchBrowseRequest(self, browseDataDict, countryID, stateID):
 		self.membersParser = MayhemBrowseParser(self.verbosity)
 		self.pageModulus = 40
+		itemCount = 0
 		params = urllib.urlencode([('fm_action', "search")
 									, ('artist_type[]', '')
 									, ('display', 'details')
@@ -39,7 +56,7 @@ class MayhemRequestHandler:
 				t = self.page.opener.open(self.URL + str(self.currentPage) + '/?' + params, '', 10)
 				#print self.URL + str(self.currentPage) + '/?' + params
 			except:
-				print "!!! Timeout. Retrying in 5 seconds..."
+				print("!!! Timeout. Retrying in 5 seconds...")
 				time.sleep(5)
 				continue
 			self.result = t.read()
@@ -49,14 +66,16 @@ class MayhemRequestHandler:
 					self.countNumberOfPages(self.verbosity)
 				
 				if self.verbosity >= 2:
-					print self.URL + params
-					print self.result
+					print(self.URL + params)
+					print(self.result)
 					
-				if self.verbosity >= 1:
-					print "Page", self.currentPage, "of", self.pageCount, ":" \
-						, sys.getsizeof(self.result)/1024, "KB returned"
+				#if self.verbosity >= 1:
+				#	print "Page", self.currentPage, "of", self.pageCount, ":" \
+				#		, sys.getsizeof(self.result)/1024, "KB returned"
 						
 			browseCount = self.membersParser.parse(browseDataDict, self.result)
+			itemCount += browseCount
+			self.animateTerminal("Members", itemCount)
 			if self.currentPage == self.pageCount or browseCount <= 0:
 				break
 			else:
@@ -65,6 +84,7 @@ class MayhemRequestHandler:
 	def launchCastingRequest(self, castingDataDict, countryID, stateID):	
 		self.castingParser = MayhemCastingParser(self.verbosity)
 		self.pageModulus = 50
+		itemCount = 0
 		params = urllib.urlencode([('fm_action', "Search")
 									, ('search_type', "casting for")
 									, ('m_search_type[]', "0")
@@ -97,7 +117,7 @@ class MayhemRequestHandler:
 			try:
 				t = self.page.opener.open(self.URL + str(self.currentPage) + '/?' + params, '', 10)
 			except:
-				print "!!! Timeout. Retrying in 5 seconds..."
+				print("!!! Timeout. Retrying in 5 seconds...")
 				time.sleep(5)
 				continue
 			self.result = t.read()
@@ -108,14 +128,16 @@ class MayhemRequestHandler:
 					self.countNumberOfPages(self.verbosity)
 						
 				if self.verbosity >= 2:
-					print self.URL + params
-					print self.result
+					print(self.URL + params)
+					print(self.result)
 					
-				if self.verbosity >= 1:
-					print "Page", self.currentPage, "of", self.pageCount, ":" \
-						, sys.getsizeof(self.result)/1024, "KB returned"
+				#if self.verbosity >= 1:
+				#	print "Page", self.currentPage, "of", self.pageCount, ":" \
+				#		, sys.getsizeof(self.result)/1024, "KB returned"
 					
 			castingCount = self.castingParser.parse(castingDataDict, self.result)
+			itemCount += castingCount
+			self.animateTerminal("Casting", itemCount)
 			if self.currentPage == self.pageCount or castingCount <= 0:
 				break
 			else:
@@ -124,5 +146,5 @@ class MayhemRequestHandler:
 	def countNumberOfPages(self, verbosity):
 		resultCount = re.search(".(results )[0-9\- ]+[ ]+(of)[ ]+([0-9]+)", self.result)
 		self.pageCount = (int(resultCount.group(3)) - 1) / self.pageModulus + 1
-		if verbosity == 1:
-			print self.pageCount, "pages to search"
+		#if verbosity == 1:
+		#	print(self.pageCount, "pages to search")
