@@ -44,3 +44,6 @@ class BrowseDataObject:
 		#print experience, compensationDict[experience.strip()]
 		self.compensation = compensationDict[compensation]
 		self.experience = experienceDict[experience]
+		
+	def dump(self):
+		print self.town, self.state, self.country
