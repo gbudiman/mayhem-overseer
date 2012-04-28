@@ -46,6 +46,9 @@ class MayhemMiner:
 			output = open('castingSummary.pkl', 'wb')
 			pickle.dump(self.castingDataDict, output)
 			output.close()
+			output = open('membersSummary.pkl', 'wb')
+			pickle.dump(self.browseDataDict, output)
+			output.close()
 			self.loadToDB()
 					
 			#for k, v in sorted(self.castingDataDict.iteritems()):
