@@ -49,10 +49,16 @@ class MayhemMiner:
 			output = open('membersSummary.pkl', 'wb')
 			pickle.dump(self.browseDataDict, output)
 			output.close()
-			self.loadToDB()
-					
-			#for k, v in sorted(self.castingDataDict.iteritems()):
-			#	print k, v.dump()		
+			
+			# used for reversing dump above in case of db failure
+			#f = open("castingSummary.pkl", 'r')
+			#self.castingDataDict = pickle.load(f)
+			#g = open("membersSummary.pkl", 'r')
+			#self.browseDataDict = pickle.load(g)
+			#self.loadToDB()
+				
+		#for k, v in sorted(self.castingDataDict.iteritems()):
+		#	print k, v.dump()		
 		return 0
 		
 	def loadToDB(self):
@@ -82,6 +88,7 @@ class MayhemMiner:
 						"Clothing Designer": 20,
 						"Approved Agency": 23,
 						"Digital Artist": 24,
+						"Moderator": 98,
 						"": 99}
 		seekType = {"Female Models": 0,
 						"Male Models": 1,
