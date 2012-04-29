@@ -43,8 +43,8 @@ class MayhemMiner:
 			
 				if self.verbosity == 1:
 					delta = datetime.now() - start
-					sys.stdout.write('\b' * (len(self.terminalMessage) + 1))
-					sys.stdout.flush()
+					#sys.stdout.write('\b' * len(self.terminalMessage))
+					#sys.stdout.flush()
 					self.terminalMessage = '\033[01;33m' + str(len(self.castingDataDict)) + ' \033[0;;m'
 					self.terminalMessage += "casting, "
 					self.terminalMessage += '\033[01;36m' + str(len(self.browseDataDict)) + ' \033[0;;m'
