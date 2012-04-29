@@ -30,7 +30,7 @@ class MayhemRequestHandler:
 		except ZeroDivisionError:
 			repeatCount  = 32
 		whiteSpace = 32 - repeatCount
-		sys.stdout.write('\b' * (len(self.terminalString) + 1))
+		sys.stdout.write('\b' * (len(self.terminalString) - 14))
 		sys.stdout.flush()
 		self.terminalString = ''
 		if title == 'Members':
