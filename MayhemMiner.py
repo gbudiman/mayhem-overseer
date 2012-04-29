@@ -4,15 +4,19 @@ from MayhemRequestHandler import MayhemRequestHandler
 from MayhemCastingParser import MayhemCastingParser
 from CastingLocationObject import CastingLocationObject
 import pickle
-import time
+import time as xtime
 import sqlite3 as lite
-from datetime import date
+from datetime import *
+from decimal import *
+import sys
 
 class MayhemMiner:
 	def __init__(self, verbosity):
 		self.verbosity = verbosity
 		self.castingDataDict = {}
 		self.browseDataDict = {}
+		self.dataTransferred = Decimal(0)
+		self.terminalMessage = ''
 		self.mine()
 		
 	def mine(self):
@@ -25,22 +29,31 @@ class MayhemMiner:
 		else:
 			totalLocation = self.loadLocation()
 			processedLocation = 1
+			start = datetime.now()
 			
 			for location in self.locationSet:
 				if self.verbosity == 1:
-					print "Launching request on", location.read(), "(", processedLocation, "of", totalLocation, "hotspots)"
+					print "Launching request on\033[01;32m", location.read(), "\033[0;;m(", processedLocation, "of", totalLocation, "hotspots)"
 				casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
-				casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
+				self.dataTransferred += casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
 				print
 				browse = MayhemRequestHandler("http://www.modelmayhem.com/browse/results/", page, self.verbosity)
-				browse.launchBrowseRequest(self.browseDataDict, location.getCountry(), location.getState())
+				self.dataTransferred += browse.launchBrowseRequest(self.browseDataDict, location.getCountry(), location.getState())
 				print
 			
 				if self.verbosity == 1:
-					print len(self.castingDataDict), "casting,", len(self.browseDataDict), "members key-value pairs generated"
+					delta = datetime.now() - start
+					sys.stdout.write('\b' * (len(self.terminalMessage) + 1))
+					sys.stdout.flush()
+					self.terminalMessage = '\033[01;33m' + str(len(self.castingDataDict)) + ' \033[0;;m'
+					self.terminalMessage += "casting, "
+					self.terminalMessage += '\033[01;36m' + str(len(self.browseDataDict)) + ' \033[0;;m'
+					self.terminalMessage += "members key-value pairs generated "
+					self.terminalMessage += "(\033[01;31m" + str(self.dataTransferred) + " MB\033[0;;m @ " + str(delta)[0:7] + ")"
+					print self.terminalMessage
 					#print len(self.browseDataDict), "browse key-value pairs generated"
 					#print "Idle for 2 seconds..."
-				time.sleep(2)
+				xtime.sleep(2)
 				processedLocation += 1
 				
 			output = open('castingSummary.pkl', 'wb')
