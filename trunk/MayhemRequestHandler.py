@@ -8,6 +8,7 @@ import sys
 from MayhemCastingParser import MayhemCastingParser
 from MayhemBrowseParser import MayhemBrowseParser
 import time
+from decimal import *
 
 class MayhemRequestHandler:
 	def __init__(self, URL, page, verbosity):
@@ -21,6 +22,7 @@ class MayhemRequestHandler:
 		self.verbosity = verbosity
 		self.castingParser = MayhemCastingParser(self.verbosity)
 		self.terminalString = ''
+		getcontext().prec = 2
 		
 	def animateTerminal(self, title, count):
 		try:
@@ -31,14 +33,21 @@ class MayhemRequestHandler:
 		sys.stdout.write('\b' * (len(self.terminalString) + 1))
 		sys.stdout.flush()
 		self.terminalString = ''
+		if title == 'Members':
+			self.terminalString += '\033[01;36m'
+		elif title == 'Casting':
+			self.terminalString += '\033[01;33m'
 		self.terminalString += title + ' [' + '=' * repeatCount + '>' + ' ' * whiteSpace + '] '
 		self.terminalString += str(self.currentPage) + '/' + str(self.pageCount) + ' (' + str(count) + ')'
+		self.terminalString += ' ' + str(self.dataTransferred) + ' MB'
+		self.terminalString += '\033[0;;m'
 		sys.stdout.write(self.terminalString)
 		sys.stdout.flush()
 		
 	def launchBrowseRequest(self, browseDataDict, countryID, stateID):
 		self.membersParser = MayhemBrowseParser(self.verbosity)
 		self.pageModulus = 40
+		self.dataTransferred = Decimal(0)
 		itemCount = 0
 		params = urllib.urlencode([('fm_action', "search")
 									, ('artist_type[]', '')
@@ -72,6 +81,7 @@ class MayhemRequestHandler:
 				#if self.verbosity >= 1:
 				#	print "Page", self.currentPage, "of", self.pageCount, ":" \
 				#		, sys.getsizeof(self.result)/1024, "KB returned"
+				self.dataTransferred += Decimal(sys.getsizeof(self.result))/1024/1024
 						
 			browseCount = self.membersParser.parse(browseDataDict, self.result)
 			itemCount += browseCount
@@ -80,10 +90,13 @@ class MayhemRequestHandler:
 				break
 			else:
 				self.currentPage += 1	
+				
+		return self.dataTransferred
 		
 	def launchCastingRequest(self, castingDataDict, countryID, stateID):	
 		self.castingParser = MayhemCastingParser(self.verbosity)
 		self.pageModulus = 50
+		self.dataTransferred = Decimal(0)
 		itemCount = 0
 		params = urllib.urlencode([('fm_action', "Search")
 									, ('search_type', "casting for")
@@ -134,6 +147,7 @@ class MayhemRequestHandler:
 				#if self.verbosity >= 1:
 				#	print "Page", self.currentPage, "of", self.pageCount, ":" \
 				#		, sys.getsizeof(self.result)/1024, "KB returned"
+				self.dataTransferred += Decimal(sys.getsizeof(self.result))/1024/1024
 					
 			castingCount = self.castingParser.parse(castingDataDict, self.result)
 			itemCount += castingCount
@@ -142,6 +156,8 @@ class MayhemRequestHandler:
 				break
 			else:
 				self.currentPage += 1
+				
+		return self.dataTransferred
 				
 	def countNumberOfPages(self, verbosity):
 		resultCount = re.search(".(results )[0-9\- ]+[ ]+(of)[ ]+([0-9]+)", self.result)
