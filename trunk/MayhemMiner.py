@@ -43,24 +43,26 @@ class MayhemMiner:
 			
 				if self.verbosity == 1:
 					delta = datetime.now() - start
-					#sys.stdout.write('\b' * len(self.terminalMessage))
-					#sys.stdout.flush()
 					self.terminalMessage = '\033[01;33m' + str(len(self.castingDataDict)) + ' \033[0;;m'
 					self.terminalMessage += "casting, "
 					self.terminalMessage += '\033[01;36m' + str(len(self.browseDataDict)) + ' \033[0;;m'
 					self.terminalMessage += "members key-value pairs generated "
 					self.terminalMessage += "(\033[01;31m" + str(self.dataTransferred) + " MB\033[0;;m @ " + str(delta)[0:7] + ")"
 					print self.terminalMessage
-					#print len(self.browseDataDict), "browse key-value pairs generated"
-					#print "Idle for 2 seconds..."
 				xtime.sleep(2)
 				processedLocation += 1
 				
 			output = open('castingSummary.pkl', 'wb')
+			sys.stdout.write("Begin dumping Casting data... ")
+			sys.stdout.flush()
 			pickle.dump(self.castingDataDict, output)
+			print "Done"
 			output.close()
 			output = open('membersSummary.pkl', 'wb')
+			sys.stdout.write("Begin dumping Members data... ")
+			sys.stdout.flush()
 			pickle.dump(self.browseDataDict, output)
+			print "Done"
 			output.close()
 			
 			# used for reversing dump above in case of db failure
@@ -68,7 +70,8 @@ class MayhemMiner:
 			#self.castingDataDict = pickle.load(f)
 			#g = open("membersSummary.pkl", 'r')
 			#self.browseDataDict = pickle.load(g)
-			#self.loadToDB()
+			
+			self.loadToDB()
 				
 		#for k, v in sorted(self.castingDataDict.iteritems()):
 		#	print k, v.dump()		
@@ -119,6 +122,7 @@ class MayhemMiner:
 						"Digital Artist": 15,
 						"": 99}
 						
+		print "Writing to database. Any error will be shown before exiting..."
 		for k, v in (self.browseDataDict.iteritems()):
 			member.append((k, professionType[v.profession], v.town, v.state, v.country, v.gender, v.lastActivity, v.shootNudes, v.compensation, v.experience))
 		for k, v in (self.castingDataDict.iteritems()):

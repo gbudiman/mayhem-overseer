@@ -22,7 +22,7 @@ class MayhemRequestHandler:
 		self.verbosity = verbosity
 		self.castingParser = MayhemCastingParser(self.verbosity)
 		self.terminalString = ''
-		getcontext().prec = 2
+		getcontext().prec = 4
 		
 	def animateTerminal(self, title, count):
 		try:
