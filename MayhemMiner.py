@@ -33,7 +33,7 @@ class MayhemMiner:
 			
 			for location in self.locationSet:
 				if self.verbosity == 1:
-					print "Launching request on\033[01;32m", location.read(), "\033[0;;m(", processedLocation, "of", totalLocation, "hotspots)"
+					print "Launching request on\x1B[01;32m", location.read(), "\x1B[0m(", processedLocation, "of", totalLocation, "hotspots)"
 				casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
 				self.dataTransferred += casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
 				print
@@ -43,11 +43,11 @@ class MayhemMiner:
 			
 				if self.verbosity == 1:
 					delta = datetime.now() - start
-					self.terminalMessage = '\033[01;33m' + str(len(self.castingDataDict)) + ' \033[0;;m'
+					self.terminalMessage = '\x1B[01;33m' + str(len(self.castingDataDict)) + ' \x1B[0m'
 					self.terminalMessage += "casting, "
-					self.terminalMessage += '\033[01;36m' + str(len(self.browseDataDict)) + ' \033[0;;m'
+					self.terminalMessage += '\x1B[01;36m' + str(len(self.browseDataDict)) + ' \x1B[0m'
 					self.terminalMessage += "members key-value pairs generated "
-					self.terminalMessage += "(\033[01;31m" + str(self.dataTransferred) + " MB\033[0;;m @ " + str(delta)[0:7] + ")"
+					self.terminalMessage += "(\x1B[01;31m" + str(self.dataTransferred) + " MB\x1B[0m @ " + str(delta)[0:7] + ")"
 					print self.terminalMessage
 				xtime.sleep(2)
 				processedLocation += 1
