@@ -30,17 +30,17 @@ class MayhemRequestHandler:
 		except ZeroDivisionError:
 			repeatCount  = 32
 		whiteSpace = 32 - repeatCount
-		sys.stdout.write('\b' * (len(self.terminalString) - 14))
+		sys.stdout.write('\b' * (len(self.terminalString) - 12))
 		sys.stdout.flush()
 		self.terminalString = ''
 		if title == 'Members':
-			self.terminalString += '\033[01;36m'
+			self.terminalString += '\x1B[01;36m'
 		elif title == 'Casting':
-			self.terminalString += '\033[01;33m'
+			self.terminalString += '\x1B[01;33m'
 		self.terminalString += title + ' [' + '=' * repeatCount + '>' + ' ' * whiteSpace + '] '
 		self.terminalString += str(self.currentPage) + '/' + str(self.pageCount) + ' (' + str(count) + ')'
 		self.terminalString += ' ' + str(self.dataTransferred) + ' MB'
-		self.terminalString += '\033[0;;m'
+		self.terminalString += '\x1B[0m'
 		sys.stdout.write(self.terminalString)
 		sys.stdout.flush()
 		
