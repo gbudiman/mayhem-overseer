@@ -11,15 +11,15 @@ from decimal import *
 import sys
 
 class MayhemMiner:
-	def __init__(self, verbosity):
+	def __init__(self, verbosity, option=None):
 		self.verbosity = verbosity
 		self.castingDataDict = {}
 		self.browseDataDict = {}
 		self.dataTransferred = Decimal(0)
 		self.terminalMessage = ''
-		self.mine()
+		self.mine(option)
 		
-	def mine(self):
+	def mine(self, option):
 		page = MayhemCookiesHandler(self.verbosity)
 		
 		if page == -1:
@@ -31,47 +31,56 @@ class MayhemMiner:
 			processedLocation = 1
 			start = datetime.now()
 			
-			for location in self.locationSet:
-				if self.verbosity == 1:
-					print "Launching request on\x1B[01;32m", location.read(), "\x1B[0m(", processedLocation, "of", totalLocation, "hotspots)"
-				casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
-				self.dataTransferred += casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
-				print
-				browse = MayhemRequestHandler("http://www.modelmayhem.com/browse/results/", page, self.verbosity)
-				self.dataTransferred += browse.launchBrowseRequest(self.browseDataDict, location.getCountry(), location.getState())
-				print
-			
-				if self.verbosity == 1:
-					delta = datetime.now() - start
-					self.terminalMessage = '\x1B[01;33m' + str(len(self.castingDataDict)) + ' \x1B[0m'
-					self.terminalMessage += "casting, "
-					self.terminalMessage += '\x1B[01;36m' + str(len(self.browseDataDict)) + ' \x1B[0m'
-					self.terminalMessage += "members key-value pairs generated "
-					self.terminalMessage += "(\x1B[01;31m" + str(self.dataTransferred) + " MB\x1B[0m @ " + str(delta)[0:7] + ")"
-					print self.terminalMessage
-				xtime.sleep(2)
-				processedLocation += 1
+			if not 'recollect' in option:
+				for location in self.locationSet:
+					if self.verbosity == 1:
+						print "Launching request on\x1B[01;32m", location.read(), "\x1B[0m(", processedLocation, "of", totalLocation, "hotspots)"
+					casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
+					self.dataTransferred += casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
+					print
+					browse = MayhemRequestHandler("http://www.modelmayhem.com/browse/results/", page, self.verbosity)
+					self.dataTransferred += browse.launchBrowseRequest(self.browseDataDict, location.getCountry(), location.getState())
+					print
 				
-			output = open('castingSummary.pkl', 'wb')
-			sys.stdout.write("Begin dumping Casting data... ")
-			sys.stdout.flush()
-			pickle.dump(self.castingDataDict, output)
-			print "Done"
-			output.close()
-			output = open('membersSummary.pkl', 'wb')
-			sys.stdout.write("Begin dumping Members data... ")
-			sys.stdout.flush()
-			pickle.dump(self.browseDataDict, output)
-			print "Done"
-			output.close()
+					if self.verbosity == 1:
+						delta = datetime.now() - start
+						self.terminalMessage = '\x1B[01;33m' + str(len(self.castingDataDict)) + ' \x1B[0m'
+						self.terminalMessage += "casting, "
+						self.terminalMessage += '\x1B[01;36m' + str(len(self.browseDataDict)) + ' \x1B[0m'
+						self.terminalMessage += "members key-value pairs generated "
+						self.terminalMessage += "(\x1B[01;32m" + str(self.dataTransferred) + " MB\x1B[0m @ " + str(delta)[0:7] + ")"
+						print self.terminalMessage
+					xtime.sleep(2)
+					processedLocation += 1
+					
+				output = open('castingSummary.pkl', 'wb')
+				sys.stdout.write("Begin dumping Casting data... ")
+				sys.stdout.flush()
+				pickle.dump(self.castingDataDict, output)
+				print "Done"
+				output.close()
+				output = open('membersSummary.pkl', 'wb')
+				sys.stdout.write("Begin dumping Members data... ")
+				sys.stdout.flush()
+				pickle.dump(self.browseDataDict, output)
+				print "Done"
+				output.close()
 			
-			# used for reversing dump above in case of db failure
-			#f = open("castingSummary.pkl", 'r')
-			#self.castingDataDict = pickle.load(f)
-			#g = open("membersSummary.pkl", 'r')
-			#self.browseDataDict = pickle.load(g)
+			if 'recollect' in option:
+				# used for reversing dump above in case of db failure
+				f = open("castingSummary.pkl", 'r')
+				sys.stdout.write("Loading pickled Casting data... ")
+				sys.stdout.flush()
+				self.castingDataDict = pickle.load(f)
+				print "Done"
+				g = open("membersSummary.pkl", 'r')
+				sys.stdout.write("Loading pickled Members data... ")
+				sys.stdout.flush()
+				self.browseDataDict = pickle.load(g)
+				print "Done"
 			
-			self.loadToDB()
+			if 'testonly' not in option:
+				self.loadToDB()
 				
 		#for k, v in sorted(self.castingDataDict.iteritems()):
 		#	print k, v.dump()		
@@ -105,6 +114,7 @@ class MayhemMiner:
 						"Approved Agency": 23,
 						"Digital Artist": 24,
 						"Moderator": 98,
+						"Test Account": 98,
 						"": 99}
 		seekType = {"Female Models": 0,
 						"Male Models": 1,
