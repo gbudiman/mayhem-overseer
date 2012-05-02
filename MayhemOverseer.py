@@ -3,7 +3,7 @@ from MayhemMiner import MayhemMiner
 import sys
 
 if len(sys.argv) == 1:
-	miner = MayhemMiner(1)
+	miner = MayhemMiner(1, list())
 else:
 	oList = list()
 	for d in range(1, len(sys.argv)):
