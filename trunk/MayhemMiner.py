@@ -31,7 +31,7 @@ class MayhemMiner:
 			processedLocation = 1
 			start = datetime.now()
 			
-			if not 'recollect' in option:
+			if 'recollect' not in option:
 				for location in self.locationSet:
 					if self.verbosity == 1:
 						print "Launching request on\x1B[01;32m", location.read(), "\x1B[0m(", processedLocation, "of", totalLocation, "hotspots)"
