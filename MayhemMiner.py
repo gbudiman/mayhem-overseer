@@ -114,6 +114,7 @@ class MayhemMiner:
 						"Approved Agency": 23,
 						"Digital Artist": 24,
 						"Moderator": 98,
+						"Admin": 98,
 						"Test Account": 98,
 						"": 99}
 		seekType = {"Female Models": 0,
