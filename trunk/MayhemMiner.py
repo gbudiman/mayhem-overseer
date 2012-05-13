@@ -35,12 +35,16 @@ class MayhemMiner:
 				for location in self.locationSet:
 					if self.verbosity == 1:
 						print "Launching request on\x1B[01;32m", location.read(), "\x1B[0m(", processedLocation, "of", totalLocation, "hotspots)"
-					casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
-					self.dataTransferred += casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
-					print
-					browse = MayhemRequestHandler("http://www.modelmayhem.com/browse/results/", page, self.verbosity)
-					self.dataTransferred += browse.launchBrowseRequest(self.browseDataDict, location.getCountry(), location.getState())
-					print
+					
+					if 'skipcasting' not in option:
+						casting = MayhemRequestHandler("http://www.modelmayhem.com/casting/result/", page, self.verbosity)
+						self.dataTransferred += casting.launchCastingRequest(self.castingDataDict, location.getCountry(), location.getState())
+						print
+						
+					if 'skipmembers' not in option:
+						browse = MayhemRequestHandler("http://www.modelmayhem.com/browse/results/", page, self.verbosity)
+						self.dataTransferred += browse.launchBrowseRequest(self.browseDataDict, location.getCountry(), location.getState())
+						print
 				
 					if self.verbosity == 1:
 						delta = datetime.now() - start
