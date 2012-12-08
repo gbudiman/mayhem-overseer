@@ -44,6 +44,14 @@ class MayhemRequestHandler:
 		sys.stdout.write(self.terminalString)
 		sys.stdout.flush()
 		
+	def launchAnnounceRequest(self, message):
+		params = urllib.urlencode([('announcement', message)
+									, ('action', 'announcement')
+									, ('vip_status', '')
+									, ('submit', "Let's do this ALREADY!")])
+		t = self.page.opener.open(self.URL, params)
+		return t.read()
+		
 	def launchBrowseRequest(self, browseDataDict, countryID, stateID):
 		self.membersParser = MayhemBrowseParser(self.verbosity)
 		self.pageModulus = 40
